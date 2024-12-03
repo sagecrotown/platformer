@@ -77,7 +77,7 @@ void AI::ai_activate(Entity *player) {
         
         case RED:          // red + yellow + blue are the same
             look_red();
-            ai_fly(-15, -12);
+            ai_fly(-13, -7);
             break;
             
         case YELLOW:

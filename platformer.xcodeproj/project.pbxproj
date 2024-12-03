@@ -18,6 +18,10 @@
 		08321E172CF6B5B8006D624E /* LevelA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08321E002CF6B5B8006D624E /* LevelA.cpp */; };
 		08321E182CF6B5B8006D624E /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08321E092CF6B5B8006D624E /* Scene.cpp */; };
 		08321E192CF6B5B8006D624E /* LevelC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08321E042CF6B5B8006D624E /* LevelC.cpp */; };
+		08321FDA2CF7081B006D624E /* Menu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08321FD92CF6DB3A006D624E /* Menu.cpp */; };
+		083223102CFEB82C006D624E /* GameOver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0832230F2CFEB82B006D624E /* GameOver.cpp */; };
+		083223132CFEBDAD006D624E /* GameWon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 083223122CFEBDAD006D624E /* GameWon.cpp */; };
+		083223162CFEC339006D624E /* MurderWinner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 083223152CFEC338006D624E /* MurderWinner.cpp */; };
 		844DC28E286650FA0099B183 /* assets in CopyFiles */ = {isa = PBXBuildFile; fileRef = 844DC28D28664F990099B183 /* assets */; };
 		DBDF1B612323DE9E007CECB1 /* shaders in CopyFiles */ = {isa = PBXBuildFile; fileRef = DBDF1B5C2323DE8D007CECB1 /* shaders */; };
 		DBDF1B632323DEDA007CECB1 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBDF1B622323DEDA007CECB1 /* OpenGL.framework */; };
@@ -64,6 +68,14 @@
 		08321E0C2CF6B5B8006D624E /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		08321E0D2CF6B5B8006D624E /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		08321E0E2CF6B5B8006D624E /* Utility.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Utility.cpp; sourceTree = "<group>"; };
+		08321FD82CF6DB23006D624E /* Menu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Menu.h; sourceTree = "<group>"; };
+		08321FD92CF6DB3A006D624E /* Menu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Menu.cpp; sourceTree = "<group>"; };
+		0832230E2CFEB81E006D624E /* GameOver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameOver.h; sourceTree = "<group>"; };
+		0832230F2CFEB82B006D624E /* GameOver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameOver.cpp; sourceTree = "<group>"; };
+		083223112CFEBDA3006D624E /* GameWon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameWon.h; sourceTree = "<group>"; };
+		083223122CFEBDAD006D624E /* GameWon.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameWon.cpp; sourceTree = "<group>"; };
+		083223142CFEC32E006D624E /* MurderWinner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MurderWinner.h; sourceTree = "<group>"; };
+		083223152CFEC338006D624E /* MurderWinner.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MurderWinner.cpp; sourceTree = "<group>"; };
 		844DC28D28664F990099B183 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		DBDF1B4F2323DE3F007CECB1 /* platformer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = platformer; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBDF1B5B2323DE8D007CECB1 /* glm */ = {isa = PBXFileReference; lastKnownFileType = folder; path = glm; sourceTree = "<group>"; };
@@ -123,6 +135,12 @@
 				08321E022CF6B5B8006D624E /* LevelB.cpp */,
 				08321E032CF6B5B8006D624E /* LevelC.h */,
 				08321E042CF6B5B8006D624E /* LevelC.cpp */,
+				0832230E2CFEB81E006D624E /* GameOver.h */,
+				083223112CFEBDA3006D624E /* GameWon.h */,
+				083223122CFEBDAD006D624E /* GameWon.cpp */,
+				083223142CFEC32E006D624E /* MurderWinner.h */,
+				083223152CFEC338006D624E /* MurderWinner.cpp */,
+				0832230F2CFEB82B006D624E /* GameOver.cpp */,
 				08321E052CF6B5B8006D624E /* main.cpp */,
 				08321E062CF6B5B8006D624E /* Map.h */,
 				08321E072CF6B5B8006D624E /* Map.cpp */,
@@ -130,6 +148,8 @@
 				08321E092CF6B5B8006D624E /* Scene.cpp */,
 				08321E0A2CF6B5B8006D624E /* ShaderProgram.h */,
 				08321E0B2CF6B5B8006D624E /* ShaderProgram.cpp */,
+				08321FD82CF6DB23006D624E /* Menu.h */,
+				08321FD92CF6DB3A006D624E /* Menu.cpp */,
 				08321E0C2CF6B5B8006D624E /* stb_image.h */,
 				08321E0D2CF6B5B8006D624E /* Utility.h */,
 				08321E0E2CF6B5B8006D624E /* Utility.cpp */,
@@ -192,6 +212,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = DBDF1B462323DE3F007CECB1;
 			productRefGroup = DBDF1B502323DE3F007CECB1 /* Products */;
@@ -210,14 +231,18 @@
 			files = (
 				08321E0F2CF6B5B8006D624E /* AI.cpp in Sources */,
 				08321E102CF6B5B8006D624E /* LevelB.cpp in Sources */,
+				08321FDA2CF7081B006D624E /* Menu.cpp in Sources */,
 				08321E112CF6B5B8006D624E /* ShaderProgram.cpp in Sources */,
 				08321E122CF6B5B8006D624E /* main.cpp in Sources */,
 				08321E132CF6B5B8006D624E /* Map.cpp in Sources */,
+				083223162CFEC339006D624E /* MurderWinner.cpp in Sources */,
 				08321E142CF6B5B8006D624E /* Entity.cpp in Sources */,
 				08321E152CF6B5B8006D624E /* Utility.cpp in Sources */,
+				083223102CFEB82C006D624E /* GameOver.cpp in Sources */,
 				08321E162CF6B5B8006D624E /* Effects.cpp in Sources */,
 				08321E172CF6B5B8006D624E /* LevelA.cpp in Sources */,
 				08321E182CF6B5B8006D624E /* Scene.cpp in Sources */,
+				083223132CFEBDAD006D624E /* GameWon.cpp in Sources */,
 				08321E192CF6B5B8006D624E /* LevelC.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

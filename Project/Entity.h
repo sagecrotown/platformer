@@ -55,6 +55,9 @@ protected:
     bool m_collided_left   = false;
     bool m_collided_right  = false;
     bool m_on_triangle = false;
+    
+    // ————— GAME LOGIC ————— //
+    bool m_level_won = false;
 
 public:
     // ————— STATIC VARIABLES ————— //
@@ -110,6 +113,7 @@ public:
     bool      const get_on_triangle() const { return m_on_triangle; }
     int       const get_animation_index() const { return m_animation_index; }
     bool      const is_active() const { return m_is_active; }
+    bool      const level_won() const { return m_level_won; }
     
     void activate()   { m_is_active = true;  };
     void deactivate() { m_is_active = false; };

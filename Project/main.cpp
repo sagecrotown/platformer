@@ -19,9 +19,13 @@
 #include "Map.h"
 #include "Utility.h"
 #include "Scene.h"
+#include "Menu.h"
 #include "LevelA.h"
 #include "LevelB.h"
 #include "LevelC.h"
+#include "GameOver.h"
+#include "GameWon.h"
+#include "MurderWinner.h"
 #include "Effects.h"
 
 // ––––– CONSTANTS ––––– //
@@ -59,12 +63,16 @@ enum AppStatus { RUNNING, TERMINATED };
 
 // ––––– GLOBAL VARIABLES ––––– //
 Scene  *g_current_scene;
+Menu *g_menu;
 LevelA *g_levelA;
 LevelB *g_levelB;
 LevelC *g_levelC;
+GameOver *g_gameOver;
+GameWon *g_gameWon;
+MurderWinner *g_murderWinner;
 
 //Effects *g_effects;
-Scene   *g_levels[3];
+Scene   *g_levels[7];
 
 SDL_Window* g_display_window;
 
@@ -90,15 +98,28 @@ void shutdown();
 // ––––– GENERAL FUNCTIONS ––––– //
 void switch_to_scene(Scene *scene)
 {
-    if (g_current_scene == g_levelA) preserved_colors = g_levelA->get_colors();
-    if (scene == g_levelC) {
-        g_levelC->set_colors(preserved_colors);
+    if (g_current_scene == g_menu || g_current_scene == g_levelA || g_current_scene == g_levelB || g_current_scene == g_levelC) {
+        preserved_colors = g_current_scene->get_colors();
+        
+        if (g_current_scene == g_levelC) {
+            std::cout << "level C: " << std::endl;
+            for (int i = 0; i < preserved_colors.size(); i++) {
+                std::cout << i << ": " << preserved_colors[i] << std::endl;
+            }
+        }
     }
+    
+    std::cout << " " << std::endl;
+    for (int i = 0; i < preserved_colors.size(); i++) {
+        std::cout << i << ": " << preserved_colors[i] << std::endl;
+    }
+    
+    scene->set_colors(preserved_colors);
     
     g_current_scene = scene;
     g_current_scene->initialise(&g_shader_program);
     
-    if (g_current_scene == g_levelB || g_current_scene == g_levelC) {
+    if (g_current_scene == g_gameWon || g_current_scene == g_gameOver || g_current_scene == g_murderWinner) {
         g_projection_matrix = glm::ortho(-15.0f, 15.0f, -11.25f, 11.25f, -1.0f, 1.0f);
         left_edge = 0.0f;
         top_edge = -2.0f;
@@ -107,6 +128,9 @@ void switch_to_scene(Scene *scene)
     else {
         g_projection_matrix = glm::ortho(-10.0f, 10.0f, -7.5f, 7.5f, -1.0f, 1.0f);
         left_edge = 10.0f;
+        bottom_edge = -12.0f;
+        right_edge = 39.5f;
+        top_edge = -7.0f;
     }
     g_shader_program.set_projection_matrix(g_projection_matrix);
 }
@@ -115,8 +139,8 @@ void soft_restart()
 {
     g_view_matrix = glm::mat4(1.0f);
     left_edge = 10.0f;
-    bottom_edge = -22.0f;
-    right_edge = 49.5f;
+    bottom_edge = -12.0f;
+    right_edge = 39.5f;
     top_edge = -7.0f;
     
     g_projection_matrix = glm::ortho(-10.0f, 10.0f, -7.5f, 7.5f, -1.0f, 1.0f);
@@ -131,18 +155,25 @@ void soft_restart()
     // enable blending
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+    
+    g_menu = new Menu();
     g_levelA = new LevelA();
     g_levelB = new LevelB();
     g_levelC = new LevelC();
+    g_gameOver = new GameOver();
+    g_gameWon = new GameWon();
+    g_murderWinner = new MurderWinner();
     
-    g_levels[0] = g_levelA;
-    g_levels[1] = g_levelB;
-    g_levels[2] = g_levelC;
+    g_levels[0] = g_menu;
+    g_levels[1] = g_levelA;
+    g_levels[2] = g_levelB;
+    g_levels[3] = g_levelC;
+    g_levels[4] = g_gameOver;
+    g_levels[5] = g_gameWon;
+    g_levels[6] = g_murderWinner;
     
-    // Start at level A
+    // Start at menu
     switch_to_scene(g_levels[0]);
-//    switch_to_scene(g_levels[1]);
     
 //    g_effects = new Effects(g_projection_matrix, g_view_matrix);
 //    g_effects->start(SHRINK, 2.0f);
@@ -155,7 +186,7 @@ void soft_restart()
 void initialise()
 {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
-    g_display_window = SDL_CreateWindow("Rise of the AI",
+    g_display_window = SDL_CreateWindow("Platformer",
                                       SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                       WINDOW_WIDTH, WINDOW_HEIGHT,
                                       SDL_WINDOW_OPENGL);
@@ -207,6 +238,9 @@ void process_input() {
                         break;
                         
                     case SDLK_RETURN:
+                        if (g_current_scene == g_menu) {
+                            switch_to_scene(g_levels[1]);
+                        }
                         break;
                         
                     default:
@@ -279,16 +313,16 @@ void update() {
     else if (top_edge < player_y) view_y = top_edge;
     else view_y = bottom_edge;
     
-        std::cout << "player: " << player_x << ", " << player_y << std::endl;
-    
-        std::cout << "left_edge: " << left_edge << std::endl;
-        std::cout << "right_edge: " << right_edge << std::endl;
-        std::cout << "top_edge: " << top_edge << std::endl;
-        std::cout << "bottom_edge: " << bottom_edge << std::endl;
-    
-        std::cout << "view_x: " << view_x << std::endl;
-        std::cout << "view_y: " << view_y << std::endl;
-        std::cout << std::endl;
+//        std::cout << "player: " << player_x << ", " << player_y << std::endl;
+//    
+//        std::cout << "left_edge: " << left_edge << std::endl;
+//        std::cout << "right_edge: " << right_edge << std::endl;
+//        std::cout << "top_edge: " << top_edge << std::endl;
+//        std::cout << "bottom_edge: " << bottom_edge << std::endl;
+//    
+//        std::cout << "view_x: " << view_x << std::endl;
+//        std::cout << "view_y: " << view_y << std::endl;
+//        std::cout << std::endl;
     
     g_view_matrix = glm::translate(g_view_matrix, glm::vec3(-view_x, -view_y, 0));
 }
@@ -311,9 +345,13 @@ void shutdown()
 {
     SDL_Quit();
     
+    delete g_menu;
     delete g_levelA;
     delete g_levelB;
     delete g_levelC;
+    delete g_gameOver;
+    delete g_gameWon;
+    delete g_murderWinner;
 //    delete g_effects;
 }
 

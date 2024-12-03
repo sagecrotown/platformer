@@ -1,12 +1,12 @@
 #include "Scene.h"
 
-class LevelA : public Scene {
+class MurderWinner : public Scene {
 public:
     int ENEMY_COUNT = 3;
-    GLuint A_font_texture_id;
+    GLuint M_font_texture_id;
     glm::vec3 message_pos;
     
-    ~LevelA();
+    ~MurderWinner();
     
     void initialise(ShaderProgram *program) override;
     void update(float delta_time) override;

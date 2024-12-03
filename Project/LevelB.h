@@ -2,10 +2,9 @@
 
 class LevelB : public Scene {
 public:
-    int ENEMY_COUNT = 5;
+    int ENEMY_COUNT = 3;
     GLuint B_font_texture_id;
     glm::vec3 message_pos;
-    glm::vec3 fuel_pos;
     
     ~LevelB();
     

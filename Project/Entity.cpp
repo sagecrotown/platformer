@@ -37,7 +37,7 @@ Entity::Entity(GLuint texture_id, float speed, glm::vec3 acceleration, float jum
     : m_position(0.0f), m_movement(0.0f), m_scale(1.0f, 1.0f, 0.0f), m_model_matrix(1.0f), m_speed(speed),m_acceleration(acceleration), m_jumping_power(jump_power), m_animation_cols(animation_cols), m_current_frames(current_frames), m_animation_index(animation_index), m_animation_rows(animation_rows), m_animation_time(animation_time), m_texture_id(texture_id), m_velocity(0.0f), m_width(width), m_height(height), m_entity_type(EntityType), m_frames(frames.size(), std::vector<int> (0)),  m_is_active(true)
 {
     set_frames(frames);
-    face_right();
+    face_forward();
 }
 
 // Simpler constructor for partial initialization
@@ -95,8 +95,6 @@ void const Entity::check_collision_y(std::vector<Entity*> collidable_entities, i
         if (check_collision(collidable_entity)) {
             float y_distance = fabs(m_position.y - collidable_entity->m_position.y);
             float y_overlap = fabs(y_distance - (m_height / 2.0f) - (collidable_entity->m_height / 2.0f));
-//            std::cout << y_overlap << std::endl;
-//            std::cout << m_velocity.y << std::endl;
             if (m_velocity.y > 0) {
                 m_position.y   -= y_overlap;
                 m_velocity.y    = 0;
@@ -115,6 +113,10 @@ void const Entity::check_collision_y(std::vector<Entity*> collidable_entities, i
                     aiPtr->deactivate();
                     colors[aiPtr->get_ai_type()]->activate();
                 }
+            }
+            
+            if(collidable_entity->get_entity_type() == PLATFORM) {        // if other is target
+                m_level_won = true;
             }
         }
     }
@@ -262,17 +264,27 @@ void Entity::update(float delta_time, Entity *player, std::vector<Entity*> colli
     m_on_triangle = false;
     
     if (m_animation_indices.size() != 0) {
-        if (glm::length(m_movement) != 0) {
-            m_animation_time += delta_time;
-            float seconds_per_frame = (float) 1 / FRAMES_PER_SECOND;
+//        if (glm::length(m_movement) != 0) {
+//            m_animation_time += delta_time;
+//            float seconds_per_frame = (float) 1 / FRAMES_PER_SECOND;
+//            
+//            if (m_animation_time >= seconds_per_frame) {
+//                m_animation_time = 0.0f;
+//                m_animation_index++;
+//                
+//                if (m_animation_index >= m_current_frames) {
+//                    m_animation_index = 0;
+//                }
+//            }
+        m_animation_time += delta_time;
+        float seconds_per_frame = (float) 1 / FRAMES_PER_SECOND;
+        
+        if (m_animation_time >= seconds_per_frame) {
+            m_animation_time = 0.0f;
+            m_animation_index++;
             
-            if (m_animation_time >= seconds_per_frame) {
-                m_animation_time = 0.0f;
-                m_animation_index++;
-                
-                if (m_animation_index >= m_current_frames) {
-                    m_animation_index = 0;
-                }
+            if (m_animation_index >= m_current_frames) {
+                m_animation_index = 0;
             }
         }
     }
