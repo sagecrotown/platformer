@@ -69,6 +69,7 @@ void LevelA::initialise(ShaderProgram *program) {
     );
         
     m_game_state.player->set_position(glm::vec3(10.0f, -5.0f, 0.0f));
+    m_game_state.player->set_start_pos(m_game_state.player->get_position());
     
     for (int i = 0; i < 5; i++) {  // because there are five possible colors
         GLuint color_texture_id = Utility::load_texture(COLOR_FILEPATHS[i]);
@@ -205,6 +206,27 @@ void LevelA::update(float delta_time)
     for (int i = 0; i < m_game_state.colors.size(); i++) {
         m_game_state.colors[i]->update(delta_time, m_game_state.player, m_game_state.collidables, ENEMY_COUNT, m_game_state.colors, m_game_state.map);
     }
+    
+//    float left_edge = 10.0f;
+//    float bottom_edge = -12.0f;
+//    float right_edge = 39.5f;
+//    float top_edge = -7.0f;
+    
+//    float view_x, view_y;
+    
+    float player_x = m_game_state.player->get_position().x;
+    float player_y = m_game_state.player->get_position().y;
+    
+    if (left_edge <= player_x && right_edge >= player_x) view_x = player_x;
+    else if (left_edge > player_x) view_x = left_edge;
+    else view_x = right_edge;
+    
+    if (top_edge >= player_y && bottom_edge <= player_y) view_y = player_y;
+    else if (top_edge < player_y) view_y = top_edge;
+    else view_y = bottom_edge;
+    
+    message_pos = glm::vec3(view_x + 7, view_y + 6.5, 0.0f);
+    life_pos = glm::vec3(message_pos.x + 2, message_pos.y, 0.0f);
 
 }
 
@@ -222,5 +244,8 @@ void LevelA::render(ShaderProgram *program)
     for (int i = 0; i < m_game_state.colors.size(); i++) {
         m_game_state.colors[i]->render(program);
     }
+    
+    Utility::draw_text(program, A_font_texture_id, "LIVES: ", 0.3f, 0.01f, message_pos);
+    Utility::draw_text(program, A_font_texture_id, std::to_string(m_game_state.player->get_lives() + 1),  0.3f, 0.01f, life_pos);
     
 }

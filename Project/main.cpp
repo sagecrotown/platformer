@@ -85,6 +85,7 @@ float g_accumulator = 0.0f;
 
 bool g_is_colliding_bottom = false;
 std::vector<bool> preserved_colors;
+int preserved_lives;
 
 AppStatus g_app_status = RUNNING;
 
@@ -100,24 +101,17 @@ void switch_to_scene(Scene *scene)
 {
     if (g_current_scene == g_menu || g_current_scene == g_levelA || g_current_scene == g_levelB || g_current_scene == g_levelC) {
         preserved_colors = g_current_scene->get_colors();
-        
-        if (g_current_scene == g_levelC) {
-            std::cout << "level C: " << std::endl;
-            for (int i = 0; i < preserved_colors.size(); i++) {
-                std::cout << i << ": " << preserved_colors[i] << std::endl;
-            }
-        }
-    }
-    
-    std::cout << " " << std::endl;
-    for (int i = 0; i < preserved_colors.size(); i++) {
-        std::cout << i << ": " << preserved_colors[i] << std::endl;
+        preserved_lives = g_current_scene->m_game_state.player->get_lives();
     }
     
     scene->set_colors(preserved_colors);
     
     g_current_scene = scene;
     g_current_scene->initialise(&g_shader_program);
+    
+    if (scene == g_levelA || scene == g_levelB || scene == g_levelC) {
+        scene->m_game_state.player->set_lives(preserved_lives);
+    }
     
     if (g_current_scene == g_gameWon || g_current_scene == g_gameOver || g_current_scene == g_murderWinner) {
         g_projection_matrix = glm::ortho(-15.0f, 15.0f, -11.25f, 11.25f, -1.0f, 1.0f);

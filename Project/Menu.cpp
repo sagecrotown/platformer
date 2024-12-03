@@ -97,6 +97,8 @@ void Menu::initialise(ShaderProgram *program) {
         m_game_state.active_colors.push_back(false);
     }
     
+    m_game_state.player->set_lives(2);   // this is three lives
+    
 //    GLuint enemy_texture_id = Utility::load_texture(ENEMY_FILEPATH);
     m_game_state.collidables.push_back(new AI());
     

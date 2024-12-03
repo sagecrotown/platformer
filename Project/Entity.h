@@ -25,6 +25,8 @@ protected:
     glm::vec3 m_scale;
     glm::vec3 m_velocity;
     glm::vec3 m_acceleration;
+    
+    glm::vec3 m_start_pos;
 
     glm::mat4 m_model_matrix;
 
@@ -58,6 +60,7 @@ protected:
     
     // ————— GAME LOGIC ————— //
     bool m_level_won = false;
+    int m_lives = 2;
 
 public:
     // ————— STATIC VARIABLES ————— //
@@ -112,6 +115,7 @@ public:
     bool      const get_collided_left() const { return m_collided_left; }
     bool      const get_on_triangle() const { return m_on_triangle; }
     int       const get_animation_index() const { return m_animation_index; }
+    int       const get_lives() const { return m_lives; }
     bool      const is_active() const { return m_is_active; }
     bool      const level_won() const { return m_level_won; }
     
@@ -135,7 +139,8 @@ public:
     void const set_jumping_power(float new_jumping_power) { m_jumping_power = new_jumping_power;}
     void const set_width(float new_width) {m_width = new_width; }
     void const set_height(float new_height) {m_height = new_height; }
-    
+    void const set_lives(int new_lives) { m_lives = new_lives; }
+    void const set_start_pos(glm::vec3 start_pos) { m_start_pos = start_pos; }
     void const change_angle(float difference) {m_angle = m_angle + difference; }
 
     // Setter for m_frames
